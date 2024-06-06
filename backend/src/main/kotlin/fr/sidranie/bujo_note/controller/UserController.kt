@@ -20,6 +20,11 @@ class UserController @Autowired constructor(
     val userTransformer: UserTransformer
 ) {
 
+    @GetMapping
+    fun print(): String {
+        return "Hello"
+    }
+
     @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun getById(@PathParam("id") id: UUID): UserDto {
         val user: User = userService.getById(id)
@@ -27,7 +32,6 @@ class UserController @Autowired constructor(
         return userTransformer.userToUserDto(user);
     }
 
-    @CrossOrigin
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun createUser(@RequestBody userDto: UserDto): UserDto {
         var user: User = userTransformer.userDtoToUser(userDto)
